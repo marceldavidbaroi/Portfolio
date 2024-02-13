@@ -1,0 +1,474 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+.wrapper{
+    width: 90%;
+    margin: auto;
+}
+header{
+    height: 60px;
+    background: black;
+    width: 100%;
+    z-index: 12;
+    position: fixed;
+}
+    .logo{
+        width: 60px;
+        height: 60px;
+        float: left;
+    
+
+    }
+
+        
+    nav{
+        float: right;
+        line-height: 60px;
+    }
+        nav a{
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            margin: 0 10px;
+
+        }
+        nav a:hover:not(.contact_button){
+            color: #0be6fd;
+            transition: 2s;
+        }
+        .active{
+            color: #0be6fd;
+        }
+        .contact_button{
+            position: relative;
+            display: inline-block;
+            padding-left: 20px;
+            padding-right: 20px;
+            border: 2px solid #0be6fd;
+            text-decoration: none;
+            -webkit-box-reflect: below 0px linear-gradient(transparent,#0002);
+            transition: 0s;
+        }
+            .contact_button:hover{
+                transition-delay: 1.5s;
+                color: #000;
+                box-shadow: 0 0 10px #0be6fd,
+                            0 0 20px #0be6fd,
+                            0 0 40px #0be6fd,
+                            0 0 60px #0be6fd,
+                            0 0 60px #0be6fd;
+            }
+            .contact_button span{
+                position: relative;
+                z-index: 100;
+            }
+            .contact_button::before{
+                content: '';
+                position: absolute;
+                left: -20px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 2px;
+                background: #0be6fd;
+                box-shadow: 5px -8px 0 #0be6fd,
+                            5px 8px 0 #0be6fd;
+                transition: width 0.5s, left 0.5s, height 0.5s, box-shadow 0.5s ;
+                
+            }
+            .contact_button:hover:before{
+                width: 60%;
+                height: 100%;
+                left: -2px;
+                box-shadow: 5px 0px 0 #0be6fd,
+                            5px 0px 0 #0be6fd;
+                transition-delay: 0s,0.5s,1s,1s;
+            }
+
+            .contact_button::after{
+                content: '';
+                position: absolute;
+                right: -20px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 2px;
+                background: #0be6fd;
+                box-shadow: -5px -8px 0 #0be6fd,
+                            -5px 8px 0 #0be6fd;
+                transition: width 0.5s, left 0.5s, height 0.5s, box-shadow 0.5s ;
+                
+            }
+            .contact_button:hover::after{
+                width: 60%;
+                height: 100%;
+                right: -2px;
+                box-shadow: -5px 0px 0 #0be6fd,
+                            -5px 0px 0 #0be6fd;
+                transition-delay: 0s,0.5s,1s,1s;
+            }
+.banner {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  perspective: 10px;
+  background: #000;
+}
+    .banner_in {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        height: 100%;
+        transform-style: preserve-3d;
+        z-index: -1;
+    }
+    .banner_in .background {
+        transform: translateZ(-10px) scale(2);
+        z-index: -2;
+    }
+    .banner_in .title {
+        transform: translateZ(-10px) scale(2);
+        z-index: -1;
+    }
+    .banner_in .foreground {
+        transform: translateZ(-5px) scale(1.5);
+        z-index: 1;
+    }
+    
+    .background,
+    .foreground {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        /* z-index: -1; */
+    }
+    
+    .banner_in .title {
+        position: absolute;
+        font-size: 40px;
+        color: white;
+        text-shadow: 0 0 5px black;;
+        
+    }
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #222;
+
+  }
+
+  .container_about{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 70px;
+  }
+        .container_about h1{
+            position: absolute;
+            font-size: 40px;
+            -webkit-text-stroke: 1px #817b7b;
+            color: transparent;
+            z-index: 10;
+        }
+        .container_about .card{
+            position: relative;
+            width: 220px;
+            height: 250px;
+            background: #2a2a2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .container_about .card .percent{
+            position: relative;
+            width: 150px;
+            height: 150px; 
+        }
+        .container_about .card .percent svg{
+            position: relative;
+            width: 150px;
+            height: 150px;
+            transform: rotate(270deg);
+        }
+        .container_about .card .percent svg circle{
+            width: 100%;
+            height: 100%;
+            fill: transparent;
+            stroke-width: 2;
+            stroke: #191919;
+            transform: translate(5px, 5px);
+        }
+        .container_about .card .percent svg circle:nth-child(2){
+            stroke: var(--clr);
+            stroke-dasharray: 440;
+            stroke-dashoffset: calc(440 - (440 * var(--num)) / 100);
+            opacity: 0;
+            animation: fadeIn 1s linear forwards;
+            animation-delay: 2.5s;
+        }
+        @keyframes fadeIn{
+            0%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+        .dot{
+            position: absolute;
+            inset: 5px;
+            z-index: 10;
+            /* transform: rotate(calc(3.6deg) * var(--num)); */
+            animation: alternateDot 2s linear forwards;
+        }
+        @keyframes alternateDot{
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(calc(3.6deg * var(--num)));
+            }
+        }
+        .dot::before{
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translate(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--clr);
+
+            box-shadow: 0 0 10px var(--clr),
+                        0 0 30px var(--clr);
+        }
+        .number{
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeIn 1s linear forwards;
+            animation-delay: 2.5s;
+        }
+        .number h2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 2.5em;
+        }
+        .number h2 span{
+            font-weight: 300;
+            color: #fff;
+            font-size: .5em;
+
+        }
+        .number p{
+            font-weight: 300;
+            font-size: 0.75em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .75);
+        }
+
+
+
+section .university{
+    width: 100vw;
+    height: auto;
+    background-color: #222222;
+
+}
+    .university h1{
+        position: relative;
+        top: 0;
+        left: 0;
+        font-size: 50px;
+        font-weight: 700;
+        margin-top: 160px;
+        margin-left: 100px;
+        margin-bottom: 60px;
+        padding: 10px;
+        color: #ffffff;
+        text-shadow: 0 0 10px #5e5c5c,
+                    0 0 20px #fff,
+                    0 0 40px #5e5c5c,
+                    0 0 60px #5e5c5c;
+    }
+    .university .uni_text{
+        width: 900px;
+        height: 100vh;
+    }
+    .university .uni_text p{
+        position: relative;
+        top: 0;
+        left: 0;
+        font-weight: 600;
+        font-size: 30px;
+        margin-left: 120px;
+        margin-right: 100px;
+        padding: 10px;
+        color: #ffffff;
+    }
+    .university .uni_text p span{
+        color: #004482;
+        text-shadow: 0 0 40px #004482;
+    }
+
+        .Logo_card{
+            position: relative;
+            max-width: 300px;
+            height: 150px;
+            background: #222;
+            margin: 30px 60px;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .5);
+            transition: 0.3s ease-in-out;
+        }
+        .Logo_card:hover{
+            height: 420px;
+        }
+        .Logo_card .DIU_logo{
+            position: relative;
+            width: 260px;
+            height: 260px;
+            top: -60px;
+            left: 20px;
+            z-index: 1;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+        }
+        .Logo_card .DIU_logo img{
+            max-width: 100%;
+            border-radius: 4px;
+        }
+        .Logo_card .diu_content a{
+            color: #fff;
+        }
+        .Logo_card .diu_content{
+            position: relative;
+            margin-top: -140px;
+            padding: 10px 15px;
+            text-align: center;
+            color: #fff;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s ease-in-out ;
+        }
+        .Logo_card:hover .diu_content{
+            visibility: visible;
+            opacity: 1;
+            margin-top: -40px;
+            transition-delay: 0.3s;
+        }
+
+
+        /* college */
+        section .college{
+            width: 100vw;
+            height: auto;
+            background-color: #222222;
+        
+        }
+            .college h1{
+                position: relative;
+                top: 0;
+                left: 0;
+                font-size: 50px;
+                font-weight: 700;
+                margin-top: 160px;
+                margin-left: 100px;
+                margin-bottom: 60px;
+                padding: 10px;
+                color: #ffffff;
+                text-shadow: 0 0 10px #5e5c5c,
+                            0 0 20px #fff,
+                            0 0 40px #5e5c5c,
+                            0 0 60px #5e5c5c;
+            }
+            .college .coll_text{
+                width: 900px;
+                height: 100vh;
+            }
+            .college .coll_text p{
+                position: relative;
+                top: 0;
+                left: 0;
+                font-weight: 600;
+                font-size: 30px;
+                margin-left: 120px;
+                margin-right: 100px;
+                padding: 10px;
+                color: #ffffff;
+            }
+            .college .coll_text p span{
+                color: #fa9c28;
+                text-shadow: 0 0 40px #fa9c28;
+            }
+        
+                .Logo_card_2{
+                    position: relative;
+                    max-width: 300px;
+                    height: 280px;
+                    background: #222;
+                    margin: 30px 60px;
+                    padding: 20px 15px;
+                    display: flex;
+                    flex-direction: column;
+                    box-shadow: 0 5px 20px rgba(0, 0, 0, .5);
+                    transition: 0.3s ease-in-out;
+                }
+                .Logo_card_2:hover{
+                    height: 530px;
+                }
+                .Logo_card .NDC_logo{
+                    position: relative;
+                    width: 260px;
+                    height: 260px;
+                    top: -60px;
+                    left: 20px;
+                    z-index: 1;
+                    box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+                }
+                .Logo_card_2 .NDC_logo img{
+                    max-width: 100%;
+                    border-radius: 4px;
+                }
+                .Logo_card_2 .NDC_content a{
+                    color: #fff;
+                }
+                .Logo_card_2 .NDC_content{
+                    position: relative;
+                    margin-top: -140px;
+                    padding: 10px 15px;
+                    text-align: center;
+                    color: #fff;
+                    visibility: hidden;
+                    opacity: 0;
+                    transition: 0.3s ease-in-out ;
+                }
+                .Logo_card_2:hover .NDC_content{
+                    visibility: visible;
+                    opacity: 1;
+                    margin-top: -10px;
+                    transition-delay: 0.3s;
+                }
