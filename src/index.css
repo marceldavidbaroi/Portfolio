@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import "tailwindcss";
+
+:root {
+  --font-terminal: "VT323", monospace;
+
+  /* Light theme colors */
+  --color-bg: #cdc9c3;
+  --color-text-dark: #2c3858;
+  --color-text-soft: #947969;
+  --color-accent-1: #cf9269;
+  --color-accent-2: #cd5756;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+  --color-bg: #1e1e1e;           /* Dark background */
+  --color-text-dark: #33ff33;    /* Classic green terminal text */
+  --color-text-soft: #66bb66;    /* Softer green */
+  --color-accent-1: #66ff66;     /* Bright accent */
+  --color-accent-2: #339933;     /* Darker accent */
+}
+
+.font-terminal {
+  font-family: var(--font-terminal) !important;
+  font-weight: 400;
+  font-style: normal;
+}
