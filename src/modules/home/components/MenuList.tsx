@@ -10,7 +10,7 @@ const MenuList: React.FC<MenuListProps> = ({ items }) => {
 
   return (
     <ul
-      className="text-7xl space-y-6 md:text-6xl lg:text-9xl font-medium text-center md:text-left"
+      className="text-7xl space-y-6 md:text-6xl lg:text-9xl font-semibold text-center md:text-left"
       style={{ color: "var(--color-text-dark)" }}
     >
       {" "}

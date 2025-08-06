@@ -94,11 +94,13 @@ const Layout: React.FC = () => {
   }, [dark]);
 
   const location = useLocation();
+  const segments = location.pathname.split("/").filter(Boolean); // Remove empty segments
+console.log(segments)
   const pathSegment = location.pathname.split("/")[1] || "";
   const isHomeExact = location.pathname === "/home";
-  const topText = pathSegment
+  const topText =segments.length>1? pathSegment
     ? pathSegment.charAt(0).toUpperCase() + pathSegment.slice(1)
-    : "Home";
+    : "Home":'Home';
 
   return (
     <div
@@ -144,7 +146,7 @@ const Layout: React.FC = () => {
             ))
           ) : (
             <div className="writing-vertical rotate-270 text-[var(--color-accent-1)] font-bold text-[9px] sm:text-xs md:text-sm lg:text-base xl:text-lg">
-              <Link to={`/${pathSegment || "home"}`} className="no-underline">
+              <Link to={`/${topText.toLowerCase() || "home"}`} className="no-underline">
                 {topText}
               </Link>
             </div>
@@ -175,7 +177,7 @@ const Layout: React.FC = () => {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-grow min-w-0 min-h-screen p-5 sm:p-8 md:p-12">
+      <main className="flex-grow min-w-0 min-h-screen px-5 sm:px-8 md:px-12">
         <Outlet />
       </main>
     </div>

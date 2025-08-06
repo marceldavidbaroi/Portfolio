@@ -26,3 +26,8 @@
   font-weight: 400;
   font-style: normal;
 }
+
+/* index.css or global.css */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
