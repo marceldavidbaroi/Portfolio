@@ -35,7 +35,7 @@ const MoonIcon = () => (
 const contactButtons = [
   {
     label: "Email",
-    href: "mailto:email@example.com",
+    href: "mailto:marceldavidbaroi@gmail.com",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ const contactButtons = [
   },
   {
     label: "Phone",
-    href: "tel:+1234567890",
+    href: "tel:+8801795774216",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -67,8 +67,22 @@ const contactButtons = [
     ),
   },
   {
+  label: "GitHub",
+  href: "https://github.com/marceldavidbaroi", // Replace with your actual GitHub URL
+  icon: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.385-1.333-1.754-1.333-1.754-1.09-.745.083-.729.083-.729 1.205.086 1.84 1.238 1.84 1.238 1.07 1.834 2.807 1.304 3.492.997.107-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.47-2.382 1.236-3.222-.124-.303-.536-1.524.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 013.003-.404c1.02.005 2.047.138 3.003.404 2.29-1.552 3.296-1.23 3.296-1.23.655 1.652.243 2.873.12 3.176.77.84 1.233 1.912 1.233 3.222 0 4.61-2.807 5.624-5.48 5.922.432.37.816 1.102.816 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+    </svg>
+  ),
+},
+  {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/yourprofile",
+    href: "https://www.linkedin.com/in/marcel-david-baroi-33861322a/",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +129,7 @@ const Layout: React.FC = () => {
           fixed top-0 left-0
           bg-[var(--color-bg)] text-[var(--color-text-soft)]
           h-screen
-          w-12 sm:w-14 md:w-16 lg:w-20 xl:w-24
+          w-8 sm:w-12 md:w-12 lg:w-14 xl:w-14
           py-4
           box-border
           flex flex-col items-center justify-between
@@ -149,7 +163,7 @@ const Layout: React.FC = () => {
               </a>
             ))
           ) : (
-            <div className="writing-vertical rotate-270 text-[var(--color-accent-1)] font-bold text-[9px] sm:text-xs md:text-sm lg:text-base xl:text-lg">
+            <div className="writing-vertical rotate-270 text-[var(--color-accent-1)] mt-8 font-bold text-[16px] sm:text-[24px] ">
               <Link to={`/${topText.toLowerCase() || "home"}`} className="no-underline">
                 {topText}
               </Link>
@@ -158,10 +172,10 @@ const Layout: React.FC = () => {
         </div>
 
         {/* Divider line */}
-        <div className="w-1/2 h-px bg-[var(--color-accent-2)] rotate-90 my-6" />
+        <div className="w-full sm:w-[200px] md:w-[350px] h-px bg-[var(--color-accent-2)] rotate-90 my-6" />
 
         {/* Bottom section */}
-        <div className="flex flex-col items-center space-y-4">
+        <div className="flex flex-col items-center space-y-4 ">
           {/* Copyright */}
           <div className="writing-vertical rotate-270 text-[var(--color-text-soft)] select-none text-[8px] sm:text-[9px] md:text-xs lg:text-sm xl:text-base whitespace-nowrap">
             © 2025
