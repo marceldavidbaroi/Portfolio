@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 interface WorkItem {
   id: string;
   title: string;
-  description: string;
+  shortDescription: string;
   stack: string[];
-  company?: string;
+  type:string;
+  associatedWithCompany: boolean;
 }
 
 interface Props {
@@ -23,13 +24,13 @@ const ProjectList: React.FC<Props> = ({ items }) => {
           className="block group px-4 pb-6 border-b border-[var(--color-text-soft)] transition-all duration-300 hover:shadow-xl hover:bg-[var(--color-bg-soft)] rounded-md"
         >
           {/* Title */}
-          <h2 className="text-7xl font-bold text-[var(--color-text-dark)] mb-2">
+          <h2 className="text-5xl sm:text-7xl font-bold text-[var(--color-text-dark)] mb-2">
             {item.title}
           </h2>
 
           {/* Company + Stack */}
           <div className="flex flex-wrap items-center gap-1.5 text-xs text-[var(--color-text-soft)] mb-1">
-            <span className="italic">{item.company || "Personal"}</span>
+            <span className="italic">{item.type}</span>
             {item.stack.map((tech) => (
               <span
                 key={tech}
@@ -45,7 +46,7 @@ const ProjectList: React.FC<Props> = ({ items }) => {
             className="text-sm text-[var(--color-text-soft)] max-w-prose opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-500 ease-in-out"
             style={{ transitionProperty: "opacity, visibility" }}
           >
-            {item.description}
+            {item.shortDescription}
           </p>
         </Link>
       ))}
