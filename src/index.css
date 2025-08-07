@@ -13,12 +13,21 @@
 }
 
 /* Dark theme overrides */
+/* [data-theme="dark"] {
+  --color-bg: #1e1e1e;           
+  --color-text-dark: #33ff33;    
+  --color-text-soft: #66bb66;    
+  --color-accent-1: #66ff66;     
+  --color-accent-2: #339933;     
+} */
+
+/* Dark theme overrides */
 [data-theme="dark"] {
-  --color-bg: #1e1e1e;           /* Dark background */
-  --color-text-dark: #33ff33;    /* Classic green terminal text */
-  --color-text-soft: #66bb66;    /* Softer green */
-  --color-accent-1: #66ff66;     /* Bright accent */
-  --color-accent-2: #339933;     /* Darker accent */
+  --color-bg: #1e1e1e;
+  --color-text-dark: #2ecc71;
+  --color-text-soft: #58d68d;
+  --color-accent-1: #27ae60;
+  --color-accent-2: #339933;
 }
 
 .font-terminal {
