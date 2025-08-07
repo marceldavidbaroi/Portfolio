@@ -20,7 +20,7 @@ const ProjectList: React.FC<Props> = ({ items }) => {
         <Link
           to={`/work/${item.id}`}
           key={item.id}
-          className="block group px-4 pb-6 border-b border-[var(--color-accent-2)] transition-all duration-300 hover:shadow-xl hover:bg-[var(--color-bg-soft)] rounded-md"
+          className="block group px-4 pb-6 border-b border-[var(--color-text-soft)] transition-all duration-300 hover:shadow-xl hover:bg-[var(--color-bg-soft)] rounded-md"
         >
           {/* Title */}
           <h2 className="text-7xl font-bold text-[var(--color-text-dark)] mb-2">
@@ -33,7 +33,7 @@ const ProjectList: React.FC<Props> = ({ items }) => {
             {item.stack.map((tech) => (
               <span
                 key={tech}
-                className="bg-[var(--color-accent-2)] text-[var(--color-bg)] px-1.5 py-0.5 rounded text-xs"
+                className="bg-[var(--color-text-soft)] text-[var(--color-bg)] px-1.5 py-0.5 rounded text-xs"
               >
                 {tech}
               </span>

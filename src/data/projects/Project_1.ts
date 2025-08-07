@@ -1,7 +1,8 @@
-import type { Project } from "../../types/ProjectDetails"; 
-const project: Project = {
+import type { PersonalProject } from "../../types/PersonalProjectDetails"; 
+const project: PersonalProject = {
   id: "p-001",
   title: "TaskFlow",
+  type:'personal',
   shortDescription: "A collaborative task management app for teams.",
   longDescription: `TaskFlow is a productivity platform designed to help teams plan, assign, and track work efficiently. It supports kanban boards, team chat, file sharing, and real-time updates. Built to scale for startups and small agencies.`,
   stack: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express", "MongoDB"],

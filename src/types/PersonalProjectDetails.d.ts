@@ -4,9 +4,10 @@ export interface ProjectFeature {
   images?: string[];
 }
 
-export interface Project {
+export interface PersonalProject {
   id: string;
   title: string;
+  type: string;
   shortDescription: string;
   longDescription: string;
   stack: string[];
@@ -22,8 +23,9 @@ export interface Project {
   associatedWithCompany: boolean;
   companyName?: string | null;
   challengesFaced: string[];
-lessonsLearned: string[];
+  lessonsLearned: string[];
+  year: string;
   role: string;
-  createdAt: string; // ISO date
-  updatedAt: string; // ISO date
+  createdAt?: string | null; // ISO date
+  updatedAt?: string | null; // ISO date
 }
