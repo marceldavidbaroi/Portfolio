@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+
 import type { PersonalProject } from "../../../types/PersonalProjectDetails";
 
 // IconWrapper and individual icons
@@ -104,15 +106,51 @@ const CompanyIcon = () => (
   </IconWrapper>
 );
 
+
+
+
 const PersonalProjectDetails: React.FC<{ project: PersonalProject }> = ({ project }) => {
+  const [modalImage, setModalImage] = useState<string | null>(null);
+  
+const [scrolled, setScrolled] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    setScrolled(window.scrollY > 50); // adjust scroll trigger here
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
   return (
-    <div
-      className="h-screen overflow-y-auto scrollbar-hide px-6 py-12 font-terminal"
-      style={{ backgroundColor: "var(--color-bg)", color: "var(--color-text-dark)" }}
-    >
-      <div className="max-w-5xl mx-auto space-y-12">
+    <>
+      {/* Top Banner: fullscreen, fixed, fades out + slides up on scroll */}
+<div
+  className={`fixed top-0 left-0 w-full h-screen z-40 flex flex-col justify-end items-center transition-all duration-700 ease-in-out overflow-y-auto
+    ${
+      scrolled
+        ? "opacity-0 scale-95 -translate-y-10 pointer-events-none"
+        : "opacity-100 scale-100"
+    }
+  `}
+  style={{
+    backgroundColor: "var(--color-bg)",
+    color: "var(--color-text-dark)",
+  }}
+>
+<h1 className="text-5xl sm:text-5xl md:text-8xl lg:text-9xl xl:text-9xl font-extrabold tracking-wide mb-40 text-center">
+  {project.title}
+</h1>
+</div>
+
+
+      {/* Main content with top padding equal to viewport height */}
+      <div
+        className="max-w-5xl mx-auto px-6 pb-16 pt-[100vh] space-y-12"
+        style={{ color: "var(--color-text-dark)", backgroundColor: "var(--color-bg)" }}
+      >
         {/* Links at top */}
-        <section className="flex flex-wrap items-center gap-6 mb-10 text-[var(--color-text-soft)] font-semibold">
+        <section className="flex flex-wrap items-center gap-6 text-[var(--color-text-soft)] font-semibold">
           <LinkIcon />
           <a
             href={project.github}
@@ -135,25 +173,31 @@ const PersonalProjectDetails: React.FC<{ project: PersonalProject }> = ({ projec
           ))}
         </section>
 
-        {/* Title and short desc */}
+        {/* Title and short description */}
         <div className="border-b border-[var(--color-text-soft)] pb-4">
           <h1 className="text-5xl font-bold">{project.title}</h1>
-          <p className="mt-2 text-lg font-medium" style={{ color: "var(--color-text-soft)" }}>
+          <p
+            className="mt-2 text-lg font-medium"
+            style={{ color: "var(--color-text-soft)" }}
+          >
             {project.shortDescription}
           </p>
         </div>
 
         {/* Images */}
         {project.images.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 rounded-lg overflow-hidden shadow-lg">
-            {project.images.map((src, idx) => (
-              <img
-                key={idx}
-                src={src}
-                alt={`Screenshot ${idx + 1}`}
-                className="object-cover w-full h-64 transform transition-transform hover:scale-105"
-              />
-            ))}
+          <div className="overflow-x-auto scrollbar-hide">
+            <div className="flex gap-4 py-2">
+              {project.images.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt={`Screenshot ${idx + 1}`}
+                  className="object-cover w-64 h-40 flex-shrink-0 rounded-lg shadow-md transform transition-transform hover:scale-105 cursor-pointer"
+                  onClick={() => setModalImage(src)}
+                />
+              ))}
+            </div>
           </div>
         )}
 
@@ -164,7 +208,9 @@ const PersonalProjectDetails: React.FC<{ project: PersonalProject }> = ({ projec
               <FeaturesIcon />
               Project Overview
             </h2>
-            <p className="leading-relaxed text-[var(--color-text-soft)]">{project.longDescription}</p>
+            <p className="leading-relaxed text-[var(--color-text-soft)]">
+              {project.longDescription}
+            </p>
           </div>
 
           <div>
@@ -195,7 +241,7 @@ const PersonalProjectDetails: React.FC<{ project: PersonalProject }> = ({ projec
               {project.stack.map((tech, idx) => (
                 <span
                   key={idx}
-                  className="px-4 py-1 rounded-full bg-gray-200 dark:bg-zinc-800 text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)] font-semibold hover:bg-[var(--color-accent-1)] dark:hover:bg-[var(--color-accent-2)] cursor-default transition-colors"
+                  className="px-4 py-1 rounded-full bg-gray-200 dark:bg-zinc-800 text-[var(--color-text-dark)] dark:text-[var(--color-accent-1)] font-semibold hover:bg-[var(--color-accent-1)] dark:hover:bg-[var(--color-accent-2)] cursor-default transition-colors"
                 >
                   {tech}
                 </span>
@@ -237,7 +283,7 @@ const PersonalProjectDetails: React.FC<{ project: PersonalProject }> = ({ projec
 
         {/* Features */}
         <section>
-          <h3 className="text-2xl font-semibold mb-6 flex items-center border-b border-[var(--color-text-soft)] pb-2">
+          <h3 className="text-2xl font-semibold mb-6 flex items-center pb-2">
             <FeaturesIcon />
             Key Features
           </h3>
@@ -245,10 +291,27 @@ const PersonalProjectDetails: React.FC<{ project: PersonalProject }> = ({ projec
             {project.features.map((feature, idx) => (
               <li
                 key={idx}
-                className="p-6 rounded-lg bg-[var(--color-bg)] shadow-md hover:shadow-xl transition-shadow cursor-default"
+                className="p-6 rounded-xl bg-[var(--color-bg)] shadow-md hover:shadow-xl transition-all cursor-default border border-transparent"
               >
-                <h4 className="font-semibold text-xl mb-1">{feature.name}</h4>
-                <p className="text-[var(--color-text-soft)]">{feature.description}</p>
+                <div className="flex flex-col md:flex-row items-start gap-4">
+                  {/* Feature Image (if available) */}
+                  {feature.images && feature.images.length > 0 && (
+                    <img
+                      src={feature.images[0]}
+                      alt={feature.name}
+                      className="w-full md:w-48 h-32 object-cover rounded-md border border-gray-300 shadow-sm cursor-pointer"
+                      onClick={() => setModalImage(feature.images[0])}
+                    />
+                  )}
+
+                  {/* Feature Text */}
+                  <div>
+                    <h4 className="font-semibold text-xl mb-1">{feature.name}</h4>
+                    <p className="text-[var(--color-text-soft)]">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
@@ -298,12 +361,48 @@ const PersonalProjectDetails: React.FC<{ project: PersonalProject }> = ({ projec
                 {project.companyName ?? "Company Name Not Provided"}
               </p>
             ) : (
-              <p className="text-[var(--color-text-soft)] italic">Not associated with a company</p>
+              <p className="text-[var(--color-text-soft)] italic">
+                Not associated with a company
+              </p>
             )}
           </div>
         </section>
       </div>
-    </div>
+
+      {/* Modal Dialog */}
+      {modalImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-50 animate-fadeIn"
+          onClick={() => setModalImage(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <img
+            src={modalImage}
+            alt="Preview"
+            className="max-w-full max-h-full rounded-lg shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            className="absolute top-5 right-5 text-white text-4xl font-bold hover:text-red-500 transition-colors"
+            onClick={() => setModalImage(null)}
+            aria-label="Close image preview"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease forwards;
+        }
+      `}</style>
+    </>
   );
 };
 

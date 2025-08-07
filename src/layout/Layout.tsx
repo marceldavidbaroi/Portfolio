@@ -95,12 +95,14 @@ const Layout: React.FC = () => {
 
   const location = useLocation();
   const segments = location.pathname.split("/").filter(Boolean); // Remove empty segments
-console.log(segments)
   const pathSegment = location.pathname.split("/")[1] || "";
   const isHomeExact = location.pathname === "/home";
-  const topText =segments.length>1? pathSegment
-    ? pathSegment.charAt(0).toUpperCase() + pathSegment.slice(1)
-    : "Home":'Home';
+  const topText =
+    segments.length > 1
+      ? pathSegment
+        ? pathSegment.charAt(0).toUpperCase() + pathSegment.slice(1)
+        : "Home"
+      : "Home";
 
   return (
     <div
@@ -110,13 +112,15 @@ console.log(segments)
       {/* Sidebar */}
       <nav
         className="
-          flex flex-col items-center justify-between
+          fixed top-0 left-0
           bg-[var(--color-bg)] text-[var(--color-text-soft)]
           h-screen
           w-12 sm:w-14 md:w-16 lg:w-20 xl:w-24
           py-4
           box-border
+          flex flex-col items-center justify-between
           flex-shrink-0
+          z-50
         "
       >
         {/* Top - Contacts icons or rotated link */}
@@ -177,7 +181,12 @@ console.log(segments)
       </nav>
 
       {/* Main Content */}
-      <main className="flex-grow min-w-0 min-h-screen px-5 sm:px-8 md:px-12">
+      <main
+        className="
+          flex-grow min-w-0 min-h-screen px-5 sm:px-8 md:px-12
+          ml-12 sm:ml-14 md:ml-16 lg:ml-20 xl:ml-24
+        "
+      >
         <Outlet />
       </main>
     </div>
