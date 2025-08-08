@@ -114,10 +114,7 @@ export interface SkillGroups {
 
 export interface LanguageSkill {
   name: string;
-  read: boolean;
-  write: boolean;
-  speak: boolean;
-  understand: boolean;
+  level: number; // percentage or 0-100 scale
 }
 
 export interface SoftSkill {

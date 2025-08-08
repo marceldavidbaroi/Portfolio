@@ -108,27 +108,9 @@ const aboutMe: AboutMe = {
 
   skills: {
     languages: [
-      {
-        name: "JavaScript",
-        read: true,
-        write: true,
-        speak: true,
-        understand: true,
-      },
-      {
-        name: "TypeScript",
-        read: true,
-        write: true,
-        speak: true,
-        understand: true,
-      },
-      {
-        name: "Python",
-        read: true,
-        write: true,
-        speak: false,
-        understand: true,
-      },
+      { name: "JavaScript", level: 90 },
+      { name: "TypeScript", level: 85 },
+      { name: "Python", level: 75 },
     ],
     softSkills: [
       { name: "Teamwork", level: 85 },

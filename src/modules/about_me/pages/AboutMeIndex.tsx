@@ -94,6 +94,20 @@ import {
   faGithub,
   faLeanpub,
 } from "@fortawesome/free-brands-svg-icons";
+import {
+  faEye, // for read
+  faPenNib, // for write
+  faCommentDots, // for speak
+  faBookOpen, // for understand
+} from "@fortawesome/free-solid-svg-icons";
+import { faCode } from "@fortawesome/free-solid-svg-icons";
+
+const skillIcons = [
+  { key: "read", label: "Read", icon: faEye },
+  { key: "write", label: "Write", icon: faPenNib },
+  { key: "speak", label: "Speak", icon: faCommentDots },
+  { key: "understand", label: "Understand", icon: faBookOpen },
+];
 
 const iconMap = {
   linkedin: faLinkedinIn,
@@ -420,32 +434,34 @@ export default function AboutMePage() {
 
         {/* Skills Summary */}
         <section
-          className="rounded-xl    transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6"
+          className="rounded-xl transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6"
           style={{ backgroundColor: "var(--color-bg)" }}
         >
-          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] p-6 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-text-dark)] pb-2">
+          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] p-6border-[var(--color-text-dark)] pb-2">
             <SkillsIcon /> Skills Summary
           </h2>
           <div className="grid md:grid-cols-3 gap-8 mt-6 text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)]">
-            {/* Languages */}
+            {/* Programming Languages */}
             <div>
-              <h3 className="font-semibold mb-3">Languages</h3>
-              <ul className="list-disc list-inside space-y-1">
-                {aboutMe.skills.languages.map(
-                  ({ name, read, write, speak, understand }) => (
-                    <li key={name}>
-                      <strong>{name}:</strong>{" "}
-                      {[
-                        read && "Read",
-                        write && "Write",
-                        speak && "Speak",
-                        understand && "Understand",
-                      ]
-                        .filter(Boolean)
-                        .join(", ")}
-                    </li>
-                  )
-                )}
+              <h3 className="font-semibold mb-3">Programming Languages</h3>
+              <ul className="space-y-4">
+                {aboutMe.skills.languages.map(({ name, level }) => (
+                  <li key={name}>
+                    <div className="flex justify-between mb-1 font-semibold">
+                      <span className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faCode} />
+                        {name}
+                      </span>
+                      <span>{level}%</span>
+                    </div>
+                    <progress
+                      className="w-full h-3 rounded-md overflow-hidden"
+                      max={100}
+                      value={level}
+                      style={{ accentColor: "var(--color-accent-2)" }}
+                    />
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -457,6 +473,7 @@ export default function AboutMePage() {
                   <li key={name}>
                     <div className="flex justify-between mb-1 font-semibold">
                       {name}
+                      <span>{level}%</span>
                     </div>
                     <progress
                       className="w-full h-3 rounded-md overflow-hidden"
@@ -477,6 +494,7 @@ export default function AboutMePage() {
                   <li key={name}>
                     <div className="flex justify-between mb-1 font-semibold">
                       {name}
+                      <span>{level}%</span>
                     </div>
                     <progress
                       className="w-full h-3 rounded-md overflow-hidden"
@@ -490,49 +508,108 @@ export default function AboutMePage() {
             </div>
           </div>
         </section>
-
-        {/* Certificates Section */}
+        {/* {language spoken } */}
         <section
-          className="rounded-xl transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6 space-y-3 mt-8"
+          className="rounded-xl transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6"
           style={{ backgroundColor: "var(--color-bg)" }}
         >
-          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2">
+          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b border-[var(--color-text-dark)] pb-2 mb-6">
+            Spoken Languages
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {aboutMe.spokenLanguages.map((lang) => (
+              <div
+                key={lang.name}
+                className="p-4 rounded-lg border border-[var(--color-accent-1)] shadow-sm hover:shadow-md transition"
+                style={{ backgroundColor: "var(--color-bg)" }}
+              >
+                <h3 className="font-semibold text-lg mb-4 text-[var(--color-text-dark)]">
+                  {lang.name}
+                </h3>
+
+                <div className="grid grid-cols-4 gap-4 text-center">
+                  {skillIcons.map(({ key, label, icon }) => (
+                    <div key={key} className="flex flex-col items-center">
+                      <FontAwesomeIcon
+                        icon={icon}
+                        className="text-[var(--color-accent-2)] text-lg mb-1"
+                      />
+                      <progress
+                        className="w-full h-2 rounded-md overflow-hidden"
+                        max={100}
+                        value={lang[key]}
+                        style={{ accentColor: "var(--color-accent-2)" }}
+                      />
+                      <span className="text-xs mt-1 text-[var(--color-text-soft)]">
+                        {lang[key]}%
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* Certificates Section */}
+        <section
+          className="rounded-xl transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6 mt-8"
+          style={{ backgroundColor: "var(--color-bg)" }}
+        >
+          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2 mb-4">
             <RoleIcon /> Certificates
           </h2>
-          <ul className="text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)] space-y-6">
-            {aboutMe.certificates.map(
-              ({
-                courseName,
-                certificateLink,
-                skillsGained,
-                issuedBy,
-                year,
-              }) => (
-                <li
-                  key={courseName}
-                  className="border border-gray-300 dark:border-gray-700 rounded-lg p-4"
-                >
-                  <a
-                    href={certificateLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-accent-1)] font-semibold text-lg hover:underline"
+
+          {/* Scrollable container */}
+          <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-[var(--color-accent-2)] scrollbar-track-transparent pb-2">
+            <div className="flex gap-4 min-w-max">
+              {aboutMe.certificates.map(
+                ({
+                  courseName,
+                  certificateLink,
+                  skillsGained,
+                  issuedBy,
+                  year,
+                }) => (
+                  <div
+                    key={courseName}
+                    className="w-72 flex-shrink-0  rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300"
+                    style={{ backgroundColor: "var(--color-bg)" }}
                   >
-                    {courseName}
-                  </a>
-                  <p className="mt-1 italic text-sm text-[var(--color-text-soft)]">
-                    Issued by {issuedBy} &mdash; {year}
-                  </p>
-                  <p className="mt-2 font-semibold">Skills Gained:</p>
-                  <ul className="list-disc list-inside ml-5 text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)]">
-                    {skillsGained.map((skill, idx) => (
-                      <li key={idx}>{skill}</li>
-                    ))}
-                  </ul>
-                </li>
-              )
-            )}
-          </ul>
+                    <a
+                      href={certificateLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--color-text-soft)] font-semibold text-lg hover:underline line-clamp-2"
+                    >
+                      {courseName}
+                    </a>
+                    <p className="mt-1 italic text-sm text-[var(--color-text-soft)]">
+                      Issued by {issuedBy} — {year}
+                    </p>
+
+                    <p className="mt-3 font-semibold text-[var(--color-text-dark)] mb-2">
+                      Skills Gained:
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {skillsGained.map((skill, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2 py-1 text-xs rounded"
+                          style={{
+                            backgroundColor: "var(--color-text-soft)",
+                            color: "var(--color-bg)",
+                          }}
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
         </section>
 
         {/* Interpersonal Skills */}
@@ -596,6 +673,189 @@ export default function AboutMePage() {
             </div>
           </div>
         </section>
+
+        {/* Extracurriculars */}
+        {aboutMe.extracurriculars?.length > 0 && (
+          <section
+            className="rounded-xl p-6 space-y-4 mt-8 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
+            style={{ backgroundColor: "var(--color-bg)" }}
+          >
+            <h2 className="text-3xl font-bold border-b-2 border-[var(--color-text-dark)] text-[var(--color-text-dark)] pb-2">
+              Extracurriculars
+            </h2>
+            <ul className="space-y-4 text-[var(--color-text-dark)]">
+              {aboutMe.extracurriculars.map(
+                ({ title, description, year }, idx) => (
+                  <li
+                    key={idx}
+                    className="p-4 border border-gray-300 rounded-lg hover:shadow-md"
+                  >
+                    <h3 className="font-semibold text-lg">{title}</h3>
+                    <p className="text-sm italic">{year}</p>
+                    <p className="mt-1">{description}</p>
+                  </li>
+                )
+              )}
+            </ul>
+          </section>
+        )}
+
+        {/* Publications */}
+        {aboutMe.publications?.length > 0 && (
+          <section
+            className="rounded-xl p-6 space-y-4 mt-8 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
+            style={{ backgroundColor: "var(--color-bg)" }}
+          >
+            <h2 className="text-3xl font-bold border-b-2 border-[var(--color-text-dark)] text-[var(--color-text-dark)] pb-2">
+              Publications
+            </h2>
+            <ul className="space-y-4 text-[var(--color-text-dark)]">
+              {aboutMe.publications.map(
+                ({ title, publisher, date, link, summary }, idx) => (
+                  <li
+                    key={idx}
+                    className="p-4 border border-gray-300 rounded-lg hover:shadow-md"
+                  >
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-lg text-[var(--color-accent-1)] hover:underline"
+                    >
+                      {title}
+                    </a>
+                    <p className="text-sm italic">
+                      {publisher} — {new Date(date).toLocaleDateString()}
+                    </p>
+                    <p className="mt-1">{summary}</p>
+                  </li>
+                )
+              )}
+            </ul>
+          </section>
+        )}
+
+        {/* Volunteering */}
+        {aboutMe.volunteering?.length > 0 && (
+          <section
+            className="rounded-xl p-6 space-y-4 mt-8 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
+            style={{ backgroundColor: "var(--color-bg)" }}
+          >
+            <h2 className="text-3xl font-bold border-b-2 border-[var(--color-text-dark)] text-[var(--color-text-dark)] pb-2">
+              Volunteering
+            </h2>
+            <ul className="space-y-4 text-[var(--color-text-dark)]">
+              {aboutMe.volunteering.map(
+                ({ organization, role, start, end, description }, idx) => (
+                  <li
+                    key={idx}
+                    className="p-4 border border-gray-300 rounded-lg hover:shadow-md"
+                  >
+                    <h3 className="font-semibold text-lg">{role}</h3>
+                    <p className="text-sm italic">
+                      {organization} ({start} — {end})
+                    </p>
+                    <p className="mt-1">{description}</p>
+                  </li>
+                )
+              )}
+            </ul>
+          </section>
+        )}
+
+        {/* Awards */}
+        {aboutMe.awards?.length > 0 && (
+          <section
+            className="rounded-xl p-6 space-y-4 mt-8 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
+            style={{ backgroundColor: "var(--color-bg)" }}
+          >
+            <h2 className="text-3xl font-bold border-b-2 border-[var(--color-text-dark)] text-[var(--color-text-dark)] pb-2">
+              Awards
+            </h2>
+            <ul className="space-y-4 text-[var(--color-text-dark)]">
+              {aboutMe.awards.map(
+                ({ title, issuer, year, description }, idx) => (
+                  <li
+                    key={idx}
+                    className="p-4 border border-gray-300 rounded-lg hover:shadow-md"
+                  >
+                    <h3 className="font-semibold text-lg">{title}</h3>
+                    <p className="text-sm italic">
+                      {issuer} — {year}
+                    </p>
+                    <p className="mt-1">{description}</p>
+                  </li>
+                )
+              )}
+            </ul>
+          </section>
+        )}
+
+        {/* Speaking Events */}
+        {aboutMe.speakingEvents?.length > 0 && (
+          <section
+            className="rounded-xl p-6 space-y-4 mt-8 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
+            style={{ backgroundColor: "var(--color-bg)" }}
+          >
+            <h2 className="text-3xl font-bold border-b-2 border-[var(--color-text-dark)] text-[var(--color-text-dark)] pb-2">
+              Speaking Events
+            </h2>
+            <ul className="space-y-4 text-[var(--color-text-dark)]">
+              {aboutMe.speakingEvents.map(
+                ({ title, event, date, link }, idx) => (
+                  <li
+                    key={idx}
+                    className="p-4 border border-gray-300 rounded-lg hover:shadow-md"
+                  >
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-lg text-[var(--color-accent-1)] hover:underline"
+                    >
+                      {title}
+                    </a>
+                    <p className="text-sm italic">
+                      {event} — {new Date(date).toLocaleDateString()}
+                    </p>
+                  </li>
+                )
+              )}
+            </ul>
+          </section>
+        )}
+
+        {/* Open Source Contributions */}
+        {aboutMe.openSource?.length > 0 && (
+          <section
+            className="rounded-xl p-6 space-y-4 mt-8 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
+            style={{ backgroundColor: "var(--color-bg)" }}
+          >
+            <h2 className="text-3xl font-bold border-b-2 border-[var(--color-text-dark)] text-[var(--color-text-dark)] pb-2">
+              Open Source Contributions
+            </h2>
+            <ul className="space-y-4 text-[var(--color-text-dark)]">
+              {aboutMe.openSource.map(
+                ({ projectName, description, link }, idx) => (
+                  <li
+                    key={idx}
+                    className="p-4 border border-gray-300 rounded-lg hover:shadow-md"
+                  >
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-lg text-[var(--color-accent-1)] hover:underline"
+                    >
+                      {projectName}
+                    </a>
+                    <p className="mt-1">{description}</p>
+                  </li>
+                )
+              )}
+            </ul>
+          </section>
+        )}
       </main>
 
       {/* Modal for image preview */}
