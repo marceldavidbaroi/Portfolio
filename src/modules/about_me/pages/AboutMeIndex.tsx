@@ -88,6 +88,19 @@ const LinkIconSmall = () => (
   </svg>
 );
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLinkedinIn,
+  faGithub,
+  faLeanpub,
+} from "@fortawesome/free-brands-svg-icons";
+
+const iconMap = {
+  linkedin: faLinkedinIn,
+  github: faGithub,
+  leetcode: faLeanpub,
+};
+
 export default function AboutMePage() {
   const [scrolled, setScrolled] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
@@ -97,6 +110,7 @@ export default function AboutMePage() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  const [expandedWorkIndex, setExpandedWorkIndex] = useState(null);
 
   return (
     <>
@@ -130,106 +144,275 @@ export default function AboutMePage() {
       >
         {/* Contact Info */}
         <section
-          className="rounded-xl p-6 space-y-3 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
+          className="rounded-xl p-6 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
           style={{ backgroundColor: "var(--color-bg)" }}
         >
-          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2">
-            <LinkIcon /> Contact Information
-          </h2>
-          <ul className="text-[var(--color-text-soft)] font-semibold flex flex-wrap gap-6">
-            {aboutMe.contact.map(({ label, url }) => {
-              // Choose icon by label (add more if you want)
-              let IconComp = null;
-              if (label.toLowerCase().includes("email")) IconComp = EmailIcon;
-              else if (label.toLowerCase().includes("phone"))
-                IconComp = PhoneIcon;
-              else IconComp = LinkIconSmall;
+          <div className="flex flex-col md:flex-row gap-8 items-center">
+            {/* Left Column - Text Details */}
+            <div className="flex-1 space-y-4 text-[var(--color-text-dark)] font-semibold">
+              <h1 className="text-4xl font-extrabold">{aboutMe.name}</h1>
+              <p className="text-xl text-[var(--color-text-dark)]">
+                {aboutMe.currentPosition}
+              </p>
+              <p className="text-base font-normal leading-relaxed">
+                {aboutMe.brief}
+              </p>
 
-              return (
-                <li key={label} className="flex items-center">
-                  <IconComp />
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-[var(--color-accent-1)] hover:underline transition"
-                  >
-                    {label}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+              {aboutMe.location && (
+                <p className="italic text-[var(--color-text-soft)]">
+                  {aboutMe.location}
+                </p>
+              )}
+
+              {/* Contact List */}
+              <ul className="flex flex-wrap gap-6 text-[var(--color-text-soft)] font-semibold">
+                {aboutMe.contact?.map(({ label, url }) => {
+                  let IconComp = null;
+                  if (label.toLowerCase().includes("email"))
+                    IconComp = EmailIcon;
+                  else if (label.toLowerCase().includes("phone"))
+                    IconComp = PhoneIcon;
+                  else IconComp = LinkIconSmall;
+
+                  return (
+                    <li key={label} className="flex items-center gap-2">
+                      <IconComp />
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[var(--color-accent-1)] hover:underline transition"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {/* Profiles Buttons */}
+              <div className="mt-4 flex flex-wrap gap-4">
+                {aboutMe.profiles?.map(({ platform, url }) => {
+                  // Extract icon key from icon string, e.g., 'fa-brands fa-linkedin-in' => 'linkedin'
+                  // For simplicity, lowercase platform name as key
+                  const iconKey = platform.toLowerCase();
+
+                  return (
+                    <a
+                      key={platform}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 border border-[var(--color-text-soft)] rounded-md px-4 py-2 text-[var(--color-text-soft)] font-semibold hover:bg-[var(--color-text-soft)] hover:text-white transition"
+                    >
+                      <FontAwesomeIcon icon={iconMap[iconKey]} />
+                      {platform}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right Column - Profile Image */}
+            <div className="flex-shrink-0 w-48 h-48 rounded-full overflow-hidden shadow-lg">
+              <img
+                src={aboutMe.profileImage}
+                alt={`${aboutMe.name} profile`}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
         </section>
 
         {/* Work Experience */}
         <section
-          className="rounded-xl  transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-1)] p-6 space-y-8"
+          className="rounded-xl transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-1)] p-6 space-y-8"
           style={{ backgroundColor: "var(--color-bg)" }}
         >
-          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2">
-            <CompanyIcon /> Work Experience
+          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)]  border-[var(--color-text-dark)] pb-2">
+            <CompanyIcon />
+            Work Experience
           </h2>
-          {aboutMe.workExperience.map((work, i) => (
-            <article
-              key={i}
-              className="border-b border-gray-200 dark:border-gray-700 rounded-lg p-5 shadow-sm"
-            >
-              <h3 className="text-xl font-semibold text-[var(--color-accent-2)] mb-1">
-                {work.position}
-              </h3>
-              <p className="italic text-sm text-[var(--color-text-soft)]">
-                {work.companyName} — {work.workPeriod.start} to{" "}
-                {work.workPeriod.end ?? "Present"} — {work.location}
-              </p>
-              <div className="mt-3 space-y-2 text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)]">
-                <p>
-                  <strong>Role:</strong> {work.role}
+
+          {aboutMe.workExperience.map((work, i) => {
+            const isExpanded = expandedWorkIndex === i;
+            // Use role if exists, else fallback to first responsibility or N/A
+            const roleText =
+              work.role ??
+              (work.responsibilities.length > 0
+                ? work.responsibilities[0]
+                : "N/A");
+
+            return (
+              <article
+                key={i}
+                className="border-b border-gray-200 dark:border-gray-700 rounded-lg p-5 shadow-sm"
+                onClick={() => setExpandedWorkIndex(isExpanded ? null : i)}
+              >
+                {/* Position + toggle button */}
+                <div className="flex justify-between items-center mb-1">
+                  <h3 className="text-xl font-semibold text-[var(--color-accent-2)]">
+                    {work.position}
+                  </h3>
+                  <button
+                    // onClick={() => setExpandedWorkIndex(isExpanded ? null : i)}
+                    aria-expanded={isExpanded}
+                    aria-label={`${
+                      isExpanded ? "Collapse" : "Expand"
+                    } details for ${work.position}`}
+                    className="text-[var(--color-accent-1)] hover:text-[var(--color-accent-2)] transition"
+                  >
+                    {isExpanded ? "▲" : "▼"}
+                  </button>
+                </div>
+
+                <p className="italic text-sm text-[var(--color-text-soft)] mb-4">
+                  {work.companyName} — {work.workPeriod.start} to{" "}
+                  {work.workPeriod.end ?? "Present"} — {work.location}
                 </p>
-                <p>
-                  <strong>Projects:</strong>{" "}
-                  {work.projectsWorkedOn.join(", ") || "N/A"}
-                </p>
-                <p>
-                  <strong>Tech Stack:</strong> {work.techStack.join(", ")}
-                </p>
-                <p>
-                  <strong>Skills Gained:</strong>
-                </p>
-                <ul className="list-disc list-inside">
-                  {work.skillsGained.map((skill, idx) => (
-                    <li key={idx}>{skill}</li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
+
+                {/* Collapsed view: Role + Tech Stack */}
+                {!isExpanded && (
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                    <p className="text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)]">
+                      <strong>Role:</strong> {roleText}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 max-w-xs">
+                      {work.techStack.map((tech, idx) => (
+                        <span
+                          key={idx}
+                          className="text-[var(--color-bg)] text-sm bg-[var(--color-text-soft)] border border-[var(--color-text-soft)] rounded px-2 py-1"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Expanded view: All details */}
+                <div
+                  className={`mt-4 space-y-6 text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)] transition-[max-height,opacity] duration-500 ease-in-out overflow-hidden ${
+                    isExpanded
+                      ? "max-h-[1000px] opacity-100 pointer-events-auto"
+                      : "max-h-0 opacity-0 pointer-events-none"
+                  }`}
+                >
+                  <div className="flex flex-col sm:flex-row sm:justify-between gap-6">
+                    {/* Projects */}
+                    <div className="sm:w-1/2">
+                      <h4 className="font-semibold mb-2">Projects</h4>
+                      <ul className="list-disc list-inside">
+                        {work.projectsWorkedOn.length > 0 ? (
+                          work.projectsWorkedOn.map((p, idx) => (
+                            <li key={idx}>
+                              {p.link ? (
+                                <a
+                                  href={p.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-[var(--color-text-soft)] hover:underline underline"
+                                >
+                                  {p.name}
+                                </a>
+                              ) : (
+                                p.name
+                              )}
+                            </li>
+                          ))
+                        ) : (
+                          <li>N/A</li>
+                        )}
+                      </ul>
+                    </div>
+
+                    {/* Responsibilities */}
+                    <div className="sm:w-1/2">
+                      <h4 className="font-semibold mb-2">Responsibilities</h4>
+                      <ul className="list-disc list-inside">
+                        {work.responsibilities.map((r, idx) => (
+                          <li key={idx}>{r}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Tech Stack chips */}
+                  <div>
+                    <h4 className="font-semibold mb-2">Tech Stack</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {work.techStack.map((tech, idx) => (
+                        <span
+                          key={idx}
+                          className="text-[var(--color-bg)] text-sm bg-[var(--color-text-soft)] border border-[var(--color-text-soft)] rounded px-2 py-1"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Skills Gained */}
+                  <div>
+                    <h4 className="font-semibold mb-2">Skills Gained</h4>
+                    <ul className="list-disc list-inside">
+                      {work.skillsGained.map((skill, idx) => (
+                        <li key={idx}>{skill}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </section>
 
         {/* Education */}
         <section
-          className="rounded-xl  transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6 space-y-3"
+          className="rounded-xl transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6 space-y-6"
           style={{ backgroundColor: "var(--color-bg)" }}
         >
-          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2">
-            <RoleIcon /> Education
+          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)]  border-[var(--color-text-dark)] pb-2">
+            <RoleIcon />
+            Education
           </h2>
-          <ul className="text-[var(--color-text-soft)]">
+
+          <ul className="space-y-6">
             {aboutMe.education.map((edu, i) => (
-              <li key={i} className="mb-3">
-                <strong>{edu.degreeName}</strong> @{" "}
-                <a
-                  href={edu.institutionLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline hover:text-[var(--color-accent-1)]"
-                >
-                  {edu.institutionName}
-                </a>
-                <span>
-                  {" "}
-                  ({edu.year.start} - {edu.year.end})
-                </span>
+              <li key={i} className="flex items-center gap-5">
+                {/* Institution Logo */}
+                {edu.image && (
+                  <img
+                    src={edu.image}
+                    alt={`${edu.institutionName} logo`}
+                    className="w-16 h-16 object-contain rounded-md shadow-sm"
+                  />
+                )}
+
+                {/* Details */}
+                <div>
+                  <p className="text-2xl font-extrabold text-[var(--color-text-dark)]">
+                    {edu.degreeName}
+                  </p>
+
+                  <a
+                    href={edu.institutionLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xl font-semibold text-[var(--color-text-soft)] hover:underline"
+                  >
+                    {edu.institutionName}
+                  </a>
+
+                  <p className="text-md text-[var(--color-text-soft)] mt-1">
+                    ({edu.year.start} - {edu.year.end}) ||
+                    <span className="text-[var(--color-bg)] bg-[var(--color-text-soft)] px-2 py-0.5 rounded ml-1">
+                      {edu.grade}
+                    </span>
+                  </p>
+                </div>
               </li>
             ))}
           </ul>
@@ -240,7 +423,7 @@ export default function AboutMePage() {
           className="rounded-xl    transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6"
           style={{ backgroundColor: "var(--color-bg)" }}
         >
-          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2">
+          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] p-6 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-text-dark)] pb-2">
             <SkillsIcon /> Skills Summary
           </h2>
           <div className="grid md:grid-cols-3 gap-8 mt-6 text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)]">
@@ -308,12 +491,56 @@ export default function AboutMePage() {
           </div>
         </section>
 
+        {/* Certificates Section */}
+        <section
+          className="rounded-xl transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6 space-y-3 mt-8"
+          style={{ backgroundColor: "var(--color-bg)" }}
+        >
+          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2">
+            <RoleIcon /> Certificates
+          </h2>
+          <ul className="text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)] space-y-6">
+            {aboutMe.certificates.map(
+              ({
+                courseName,
+                certificateLink,
+                skillsGained,
+                issuedBy,
+                year,
+              }) => (
+                <li
+                  key={courseName}
+                  className="border border-gray-300 dark:border-gray-700 rounded-lg p-4"
+                >
+                  <a
+                    href={certificateLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-accent-1)] font-semibold text-lg hover:underline"
+                  >
+                    {courseName}
+                  </a>
+                  <p className="mt-1 italic text-sm text-[var(--color-text-soft)]">
+                    Issued by {issuedBy} &mdash; {year}
+                  </p>
+                  <p className="mt-2 font-semibold">Skills Gained:</p>
+                  <ul className="list-disc list-inside ml-5 text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)]">
+                    {skillsGained.map((skill, idx) => (
+                      <li key={idx}>{skill}</li>
+                    ))}
+                  </ul>
+                </li>
+              )
+            )}
+          </ul>
+        </section>
+
         {/* Interpersonal Skills */}
         <section
           className="rounded-xl  transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6 space-y-3"
           style={{ backgroundColor: "var(--color-bg)" }}
         >
-          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2">
+          <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] p-6 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-text-dark)] pb-2">
             <RoleIcon /> Interpersonal Skills
           </h2>
           <ul className="text-[var(--color-text-dark)] dark:text-[var(--color-text-soft)] space-y-4">
@@ -335,7 +562,7 @@ export default function AboutMePage() {
             className="rounded-xl  transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-1)] p-6"
             style={{ backgroundColor: "var(--color-bg)" }}
           >
-            <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2">
+            <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] p-6 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-text-dark)] pb-2">
               <SkillsIcon /> Hobbies
             </h2>
             <div className="flex flex-wrap gap-3 mt-4">
@@ -354,7 +581,7 @@ export default function AboutMePage() {
             className="rounded-xl  transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6"
             style={{ backgroundColor: "var(--color-bg)" }}
           >
-            <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] border-b-2 border-[var(--color-text-dark)] pb-2">
+            <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] p-6 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-text-dark)] pb-2">
               <SkillsIcon /> Interests
             </h2>
             <div className="flex flex-wrap gap-3 mt-4">

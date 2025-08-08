@@ -3,14 +3,8 @@ export interface AboutMe {
   currentPosition: string;
   brief: string; // short intro paragraph about yourself
   location?: string;
-
-  /**
-   * Contact methods such as Email, Phone, Website.
-   * Each item should have:
-   * - label: used for deciding the icon (e.g., "Email", "GitHub", "LinkedIn")
-   * - url: the actual link (mailto:, tel:, https://)
-   */
   contact?: ContactMethod[];
+  profileImage: string;
 
   workExperience: WorkExperience[];
   education: Education[];
@@ -51,6 +45,11 @@ export interface ContactMethod {
 // -------------------------
 // Work Experience
 // -------------------------
+export interface Project {
+  name: string;
+  link?: string; // optional project URL
+}
+
 export interface WorkExperience {
   companyName: string;
   position: string;
@@ -60,7 +59,7 @@ export interface WorkExperience {
   };
   location?: string;
   responsibilities: string[];
-  projectsWorkedOn: string[];
+  projectsWorkedOn: Project[]; // updated to array of Project objects
   skillsGained: string[];
   techStack: string[];
   personalImage?: string[]; // showcase relevant images/screenshots from this job
@@ -74,7 +73,7 @@ export interface Education {
   institutionName: string;
   grade?: string;
   institutionLink?: string;
-  image: string[]; // institution logos
+  image: string; // institution logos
   personalImage: string[]; // relevant project or activity photos
   year: {
     start: string; // YYYY
@@ -214,9 +213,9 @@ export interface OpenSourceContribution {
 // New Interface for Spoken Languages with Proficiency Levels
 // -------------------------
 export interface SpokenLanguageSkill {
-  name: string;        // Language name, e.g. "English", "Bangla"
-  read: number;        // 0-100 proficiency percentage
-  write: number;       // 0-100 proficiency percentage
-  speak: number;       // 0-100 proficiency percentage
-  understand: number;  // 0-100 proficiency percentage
+  name: string; // Language name, e.g. "English", "Bangla"
+  read: number; // 0-100 proficiency percentage
+  write: number; // 0-100 proficiency percentage
+  speak: number; // 0-100 proficiency percentage
+  understand: number; // 0-100 proficiency percentage
 }
