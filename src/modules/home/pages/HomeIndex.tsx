@@ -10,9 +10,7 @@ const HomeIndex: React.FC = () => {
       style={{ backgroundColor: "var(--color-bg)" }}
     >
       {/* Left Column */}
-      <div
-        className="w-full md:w-1/2 lg:w-1/3 flex items-end px-4 sm:px-6 md:px-16 py-6 sm:py-8 md:py-20 box-border pt-32 sm:pt-0"
-      >
+      <div className="w-full md:w-1/2 lg:w-1/3 flex items-end px-4 sm:px-6 md:px-16 py-6 sm:py-8 md:py-20 box-border pt-32 sm:pt-0">
         <div className="text-center md:text-left w-full">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-terminal text-amber-600 mb-2">
             Marcel David

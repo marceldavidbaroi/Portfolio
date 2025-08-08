@@ -67,19 +67,19 @@ const contactButtons = [
     ),
   },
   {
-  label: "GitHub",
-  href: "https://github.com/marceldavidbaroi", // Replace with your actual GitHub URL
-  icon: (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5"
-      fill="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.385-1.333-1.754-1.333-1.754-1.09-.745.083-.729.083-.729 1.205.086 1.84 1.238 1.84 1.238 1.07 1.834 2.807 1.304 3.492.997.107-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.47-2.382 1.236-3.222-.124-.303-.536-1.524.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 013.003-.404c1.02.005 2.047.138 3.003.404 2.29-1.552 3.296-1.23 3.296-1.23.655 1.652.243 2.873.12 3.176.77.84 1.233 1.912 1.233 3.222 0 4.61-2.807 5.624-5.48 5.922.432.37.816 1.102.816 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-    </svg>
-  ),
-},
+    label: "GitHub",
+    href: "https://github.com/marceldavidbaroi", // Replace with your actual GitHub URL
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.385-1.333-1.754-1.333-1.754-1.09-.745.083-.729.083-.729 1.205.086 1.84 1.238 1.84 1.238 1.07 1.834 2.807 1.304 3.492.997.107-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.47-2.382 1.236-3.222-.124-.303-.536-1.524.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 013.003-.404c1.02.005 2.047.138 3.003.404 2.29-1.552 3.296-1.23 3.296-1.23.655 1.652.243 2.873.12 3.176.77.84 1.233 1.912 1.233 3.222 0 4.61-2.807 5.624-5.48 5.922.432.37.816 1.102.816 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.216.694.825.576C20.565 21.796 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+      </svg>
+    ),
+  },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/marcel-david-baroi-33861322a/",
@@ -120,25 +120,22 @@ const Layout: React.FC = () => {
 
   return (
     <div
-      className="flex min-h-screen bg-[var(--color-bg)] font-terminal font-normal overflow-x-hidden"
+      className="flex min-h-screen bg-[var(--color-bg)] font-terminal font-normal overflow-x-hidden "
       style={{ fontStyle: "normal" }}
     >
       {/* Sidebar */}
       <nav
         className="
-          fixed top-0 left-0
-          bg-[var(--color-bg)] text-[var(--color-text-soft)]
-          h-screen
-          w-8 sm:w-12 md:w-12 lg:w-14 xl:w-14
-          py-4
-          box-border
-          flex flex-col items-center justify-between
-          flex-shrink-0
-          z-50
-        "
+    fixed
+    top-0 left-0 right-0
+    bg-[var(--color-bg)] text-[var(--color-text-soft)]
+    h-12
+    flex flex-row items-center justify-between px-4
+    sm:h-screen sm:w-12 sm:flex-col sm:py-4 sm:box-border sm:flex-shrink-0
+    z-50
+  "
       >
-        {/* Top - Contacts icons or rotated link */}
-        <div className="flex flex-col items-center justify-center select-none whitespace-nowrap space-y-4">
+        <div className="flex flex-row sm:flex-col items-center justify-center select-none whitespace-nowrap space-x-4 sm:space-x-0 sm:space-y-4 w-full sm:w-auto">
           {isHomeExact ? (
             contactButtons.map(({ label, href, icon }) => (
               <a
@@ -148,23 +145,26 @@ const Layout: React.FC = () => {
                 rel={href.startsWith("http") ? "noreferrer" : undefined}
                 title={label}
                 className="
-                  p-1
-                  text-[var(--color-accent-1)]
-                  border border-[var(--color-accent-1)]
-                  rounded
-                  hover:bg-[var(--color-accent-1)]
-                  hover:text-[var(--color-bg)]
-                  transition-colors duration-300
-                  flex items-center justify-center
-                  w-8 h-8
-                "
+            p-1
+            text-[var(--color-accent-1)]
+            border border-[var(--color-accent-1)]
+            rounded
+            hover:bg-[var(--color-accent-1)]
+            hover:text-[var(--color-bg)]
+            transition-colors duration-300
+            flex items-center justify-center
+            w-8 h-8
+          "
               >
                 {icon}
               </a>
             ))
           ) : (
-            <div className="writing-vertical rotate-270 text-[var(--color-accent-1)] mt-8 font-bold text-[16px] sm:text-[24px] ">
-              <Link to={`/${topText.toLowerCase() || "home"}`} className="no-underline">
+            <div className="writing-vertical sm:rotate-270 text-[var(--color-accent-1)] font-bold text-[16px] sm:text-[24px]">
+              <Link
+                to={`/${topText.toLowerCase() || "home"}`}
+                className="no-underline"
+              >
                 {topText}
               </Link>
             </div>
@@ -172,16 +172,15 @@ const Layout: React.FC = () => {
         </div>
 
         {/* Divider line */}
-        <div className="w-full sm:w-[200px] md:w-[350px] h-px bg-[var(--color-accent-2)] rotate-90 my-6" />
+        <div className="hidden sm:block w-full md:w-[350px] h-px bg-[var(--color-accent-2)] rotate-90 my-6"></div>
+        <div className="block sm:hidden w-px h-6 bg-[var(--color-accent-2)] mx-2"></div>
 
         {/* Bottom section */}
-        <div className="flex flex-col items-center space-y-4 ">
-          {/* Copyright */}
-          <div className="writing-vertical rotate-270 text-[var(--color-text-soft)] select-none text-[8px] sm:text-[9px] md:text-xs lg:text-sm xl:text-base whitespace-nowrap">
+        <div className="flex flex-row sm:flex-col items-center space-x-4 sm:space-x-0 sm:space-y-4">
+          <div className="select-none text-[8px] sm:text-base whitespace-nowrap writing-vertical sm:rotate-270 text-[var(--color-text-soft)]">
             © 2025
           </div>
 
-          {/* Dark mode toggle button */}
           <button
             onClick={() => setDark(!dark)}
             className="p-1 text-[var(--color-accent-1)] border border-[var(--color-accent-1)] rounded select-none hover:bg-[var(--color-accent-1)] hover:text-[var(--color-bg)] transition-colors duration-300"
@@ -197,8 +196,8 @@ const Layout: React.FC = () => {
       {/* Main Content */}
       <main
         className="
-          flex-grow min-w-0 min-h-screen px-5 sm:px-8 md:px-12
-          ml-12 sm:ml-14 md:ml-16 lg:ml-20 xl:ml-24
+          flex-grow min-w-0 min-h-screen px-0 sm:px-6 md:px-6
+          ml-0 sm:ml-14 md:ml-16 lg:ml-20 xl:ml-24
         "
       >
         <Outlet />
