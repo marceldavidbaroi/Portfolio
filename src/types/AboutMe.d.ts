@@ -1,16 +1,23 @@
 export interface AboutMe {
   name: string;
   currentPosition: string;
-  brief: string;
+  brief: string; // short intro paragraph about yourself
   location?: string;
-  contactEmail?: string;
+
+  /**
+   * Contact methods such as Email, Phone, Website.
+   * Each item should have:
+   * - label: used for deciding the icon (e.g., "Email", "GitHub", "LinkedIn")
+   * - url: the actual link (mailto:, tel:, https://)
+   */
+  contact?: ContactMethod[];
 
   workExperience: WorkExperience[];
   education: Education[];
-  profiles: ProfileLink[];
+  profiles: ProfileLink[]; // GitHub, LinkedIn, etc.
   certificates: Certificate[];
 
-  skills: SkillGroups;
+  skills: SkillGroups; // languages, soft skills, hard skills
   interpersonalSkills: InterpersonalSkill[];
 
   extracurriculars: Extracurricular[];
@@ -21,6 +28,24 @@ export interface AboutMe {
   publications?: Publication[];
   volunteering?: Volunteering[];
   awards?: Award[];
+
+  // -------- Additional Helpful Fields --------
+  spokenLanguages?: SpokenLanguageSkill[]; // Detailed spoken languages with proficiency
+  availability?: "Open to Work" | "Freelance" | "Not Available";
+  resumeLink?: string; // URL to CV
+  highlights?: string[]; // key career achievements
+  testimonials?: Testimonial[]; // quotes from colleagues/clients
+  techSummary?: string[]; // quick tech stack overview
+  speakingEvents?: SpeakingEvent[]; // conferences/talks
+  openSource?: OpenSourceContribution[]; // notable contributions
+}
+
+// -------------------------
+// Contact
+// -------------------------
+export interface ContactMethod {
+  label: string; // e.g., "Email", "Phone", "Website"
+  url: string; // e.g., mailto:, tel:, https://
 }
 
 // -------------------------
@@ -38,6 +63,7 @@ export interface WorkExperience {
   projectsWorkedOn: string[];
   skillsGained: string[];
   techStack: string[];
+  personalImage?: string[]; // showcase relevant images/screenshots from this job
 }
 
 // -------------------------
@@ -48,6 +74,8 @@ export interface Education {
   institutionName: string;
   grade?: string;
   institutionLink?: string;
+  image: string[]; // institution logos
+  personalImage: string[]; // relevant project or activity photos
   year: {
     start: string; // YYYY
     end: string; // YYYY
@@ -72,6 +100,8 @@ export interface Certificate {
   skillsGained: string[];
   issuedBy?: string;
   year?: string;
+  image?: string[]; // certificate scans
+  personalImage?: string[]; // photos relevant to the course or achievement
 }
 
 // -------------------------
@@ -117,18 +147,19 @@ export interface Extracurricular {
   description: string;
   year?: string;
   relatedLinks?: string[];
+  personalImage?: string[]; // showcase event pictures
 }
 
 // -------------------------
 // Optional Add-ons
 // -------------------------
-
 export interface Publication {
   title: string;
   publisher: string;
   date: string; // YYYY-MM
   link?: string;
   summary?: string;
+  personalImage?: string[]; // relevant screenshots or book/article covers
 }
 
 export interface Volunteering {
@@ -137,6 +168,7 @@ export interface Volunteering {
   start: string;
   end?: string;
   description?: string;
+  personalImage?: string[]; // photos from volunteering events
 }
 
 export interface Award {
@@ -144,4 +176,47 @@ export interface Award {
   issuer: string;
   year: string;
   description?: string;
+  personalImage?: string[]; // award ceremony or certificate photos
+}
+
+// -------------------------
+// Testimonials
+// -------------------------
+export interface Testimonial {
+  name: string;
+  relation: string; // "Former Manager", "Colleague"
+  quote: string;
+  personalImage?: string[];
+}
+
+// -------------------------
+// Speaking Events
+// -------------------------
+export interface SpeakingEvent {
+  title: string; // talk/workshop title
+  event: string; // conference or event name
+  date: string; // YYYY-MM
+  link?: string;
+  personalImage?: string[];
+}
+
+// -------------------------
+// Open Source Contributions
+// -------------------------
+export interface OpenSourceContribution {
+  projectName: string;
+  description: string;
+  link: string;
+  personalImage?: string[];
+}
+
+// -------------------------
+// New Interface for Spoken Languages with Proficiency Levels
+// -------------------------
+export interface SpokenLanguageSkill {
+  name: string;        // Language name, e.g. "English", "Bangla"
+  read: number;        // 0-100 proficiency percentage
+  write: number;       // 0-100 proficiency percentage
+  speak: number;       // 0-100 proficiency percentage
+  understand: number;  // 0-100 proficiency percentage
 }
