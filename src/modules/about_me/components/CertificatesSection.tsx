@@ -24,13 +24,13 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
       </h2>
 
       {/* Scrollable container */}
-      <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-[var(--color-accent-2)] scrollbar-track-transparent pb-2">
+      <div className=" scrollbar-hide overflow-x-auto scrollbar-thin scrollbar-thumb-[var(--color-accent-2)]  scrollbar-track-transparent pb-2">
         <div className="flex gap-4 min-w-max">
           {aboutMe.certificates.map(
             ({ courseName, certificateLink, skillsGained, issuedBy, year }) => (
               <div
                 key={courseName}
-                className="w-72 flex-shrink-0 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300"
+                className="w-72 flex-shrink-0 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300 border-b-2"
                 style={{ backgroundColor: "var(--color-bg)" }}
               >
                 <a
