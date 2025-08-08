@@ -18,7 +18,7 @@ const InterpersonalSkillsSection: React.FC<InterpersonalSkillsSectionProps> = ({
       className="rounded-xl transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6 space-y-3"
       style={{ backgroundColor: "var(--color-bg)" }}
     >
-      <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] p-6 border-b border-[var(--color-text-dark)] pb-2">
+      <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] p-6  border-[var(--color-text-dark)] pb-2">
         <RoleIcon />
         Interpersonal Skills
       </h2>

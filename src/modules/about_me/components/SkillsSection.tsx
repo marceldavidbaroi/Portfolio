@@ -17,7 +17,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ aboutMe }) => {
       className="rounded-xl transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] border-[var(--color-accent-2)] p-6"
       style={{ backgroundColor: "var(--color-bg)" }}
     >
-      <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] pb-2 border-b border-[var(--color-text-dark)]">
+      <h2 className="text-3xl font-bold flex items-center gap-3 text-[var(--color-text-dark)] pb-2  border-[var(--color-text-dark)]">
         <SkillsIcon />
         Skills Summary
       </h2>
